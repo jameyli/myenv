@@ -1,4 +1,4 @@
-vimfile/*
+vimfiles/*
 *.pyc
 *.bak
 *.bk
