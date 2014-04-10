@@ -9,24 +9,10 @@
 "           has('gui_win32') means Windows 32 bit GUI version.
 "           has('gui_win64') means Windows 64 bit GUI version.
 "           has('gui_running') means in GUI mode.
-" Last Change: 2014-04-10 15:03:08
+" Last Change: 2014-04-10 15:21:38
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
-
-" Profiling {{{
-" http://www.vim.org/scripts/script.php?script_id=2915
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Comment out profiling by default
-" if has('unix')
-"     let g:startup_profile_csv = $HOME . '/tmp/vim_startup_profile.csv'
-" elseif has('win32') || has('win64')
-"     let g:startup_profile_csv = $VIM . '/vim_startup_profile.csv'
-" endif
-" runtime macros/startup_profile.vim
-
-
-" End of Profiling }}}
 
 " General {{{
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -88,8 +74,8 @@ endif
 " End of General }}}
 
 " install Vundle bundles
-if filereadable(expand("~/.vim/vimrc_bundle"))
-    source ~/.vim/vimrc_bundle
+if filereadable(expand("~/.vim/vimrc_bundle.vim"))
+    source ~/.vim/vimrc_bundle.vim
 endif
 
 " Startup/Exit {{{
@@ -673,7 +659,7 @@ endfunction
 " Fast editing of vimrc
 function s:OpenVimrc()
     if has('unix')
-        call s:OpenFileWithProperBuffer('$HOME/.vimrc')
+        call s:OpenFileWithProperBuffer('$HOME/.vim/vimrc')
     elseif has('win32') || has('win64')
         call s:OpenFileWithProperBuffer('$VIM/_vimrc')
     endif
