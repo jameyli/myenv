@@ -8,4 +8,6 @@ My Develop Environment Init
 
 2. vim
 =======
+    vimrc   基础设置
+    vimrc_bundle.vim    插件管理
 
