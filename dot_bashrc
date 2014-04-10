@@ -1,0 +1,40 @@
+# .bashrc
+
+export PATH=/usr/local/mysql/bin:/sbin:/usr/sbin:/usr/local/sbin:/opt/gnome/sbin:/usr/local/bin:/usr/bin:/usr/X11R6/bin:/bin:/usr/games
+export PATH=$PATH:/opt/CollabNet_Subversion/bin:/usr/local/bin:~/bin
+export PATH=$PATH:/Volumes/dev/homebrew/bin
+export PATH=$PATH:/usr/texbin
+export PATH=$PATH:~/usr/bin
+
+#User specific aliases and functions
+
+# command line like vi
+set -o vi
+
+ulimit -Sc unlimited
+umask 027
+
+export PS1='[${PWD}]\$'
+export LC_ALL=en_US.utf-8
+export HISTTIMEFORMAT="%F %T "
+export FIGNORE='.o:.bak:.tmp'
+
+alias mv='mv -i'
+alias rm='rm -i'
+alias cp='cp -i'
+# alias ls='ls -F --color=tty'
+alias l.='ls -ld .* --color=tty'
+alias ll='ls -l --color=tty'
+alias lh='ls -ldh --color=tty'
+alias vi='vim'
+alias vr='vim -R'
+alias gdb='gdb -q'
+alias which='alias | /usr/bin/which --tty-only --read-alias --show-dot --show-tilde'
+# screen
+alias sl='screen -ls'
+alias sr='screen -D -R'
+# color
+export TERM=xterm-256color
+export CLICOLOR=1
+export LSCOLORS=GxFxBxDxCxegedabagaced
+
