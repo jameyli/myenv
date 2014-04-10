@@ -1,0 +1,705 @@
+" Brief:    This vimrc supports Mac, Linux and Windows(both GUI & console version).
+"           While it is well commented, just in case some commands confuse you,
+"           please RTFM by ':help WORD' or ':helpgrep WORD'.
+" Comments:
+"           has('mac') means Mac version only.
+"           has('unix') means Mac or Linux version.
+"           has('win32') means Windows 32 verion only.
+"           has('win64') means Windows 64 verion only.
+"           has('gui_win32') means Windows 32 bit GUI version.
+"           has('gui_win64') means Windows 64 bit GUI version.
+"           has('gui_running') means in GUI mode.
+" Last Change: 2014-04-10 15:03:08
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+" Profiling {{{
+" http://www.vim.org/scripts/script.php?script_id=2915
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Comment out profiling by default
+" if has('unix')
+"     let g:startup_profile_csv = $HOME . '/tmp/vim_startup_profile.csv'
+" elseif has('win32') || has('win64')
+"     let g:startup_profile_csv = $VIM . '/vim_startup_profile.csv'
+" endif
+" runtime macros/startup_profile.vim
+
+
+" End of Profiling }}}
+
+" General {{{
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if v:version < 700
+    echoerr 'This _vimrc requires Vim 7.0 or later.'
+    quit
+endif
+
+" Remove ALL autocommands for the current group
+au!
+
+" Use Vim settings, rather then Vi settings.
+" This option must be first, because it changes other options.
+set nocompatible
+
+
+let maplocalleader = ","
+let mapleader = ","
+
+" If vim starts without opening file(s),
+" change working directory to $VIM (Windows) or $HOME(Mac, Linux).
+if expand('%') == ''
+    if has('unix')
+        cd $HOME
+    elseif has('win32') || has('win64')
+        cd $VIM
+    endif
+endif
+
+
+if has('unix')
+    set runtimepath=$HOME/.vim/vimfiles
+    set runtimepath+=$VIMRUNTIME
+    set runtimepath+=$HOME/.vim/vimfiles/after
+elseif has('win32') || has('win64')
+    set runtimepath=$VIM/vimfiles
+    set runtimepath+=$VIMRUNTIME
+    set runtimepath+=$VIM/vimfiles/after
+endif
+
+" Do not load system menu, must before ':syntax on' and ':filetype on'
+if has('gui_running')
+    set guioptions+=M
+endif
+
+" Patch to hide DOS prompt window, when call vim function system().
+" See Wu Yongwei's site for detail
+" http://wyw.dcweb.cn/
+if has('win32') || has('win64')
+    let $VIM_SYSTEM_HIDECONSOLE = 1
+endif
+
+if has('mac') && has('gui_running')
+    set fuoptions+=maxhorz
+    nnoremap <silent> <unique> <D-f> :set invfullscreen<CR>
+    inoremap <silent> <unique> <D-f> <C-o>:set invfullscreen<CR>
+endif
+
+" End of General }}}
+
+" install Vundle bundles
+if filereadable(expand("~/.vim/vimrc_bundle"))
+    source ~/.vim/vimrc_bundle
+endif
+
+" Startup/Exit {{{
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set shortmess+=I
+
+if has('gui_win32') || has('gui_win64')
+    au GUIEnter * simalt ~x
+    command! Res simalt ~r
+    command! Max simalt ~x
+endif
+
+language messages zh_CN.utf-8
+
+" Locate the cursor at the last edited location when open a file
+au BufReadPost *
+    \ if line("'\"") > 1 && line("'\"") <= line("$") |
+    \   exec "normal! g`\"" |
+    \ endif
+
+if has('unix')
+    " XXX: Change it. It's just for my environment.
+    set viminfo+=n$HOME/.vim_tmp/.viminfo
+endif
+
+" End of Startup }}}
+
+" Encoding {{{
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:legacy_encoding = &encoding
+let &termencoding = &encoding
+
+set encoding=utf-8
+set ambiwidth=double
+set fileencodings=ucs-bom,utf-8,default,gb18030,big5,latin1
+if g:legacy_encoding != 'latin1'
+    let &fileencodings=substitute(
+                \&fileencodings, '\<default\>', g:legacy_encoding, '')
+else
+    let &fileencodings=substitute(
+                \&fileencodings, ',default,', ',', '')
+endif
+
+" This function is revised from Wu yongwei's _vimrc.
+" Function to display the current character code in its 'file encoding'
+function s:EchoCharCode()
+    let char_enc = matchstr(getline('.'), '.', col('.') - 1)
+    let char_fenc = iconv(char_enc, &encoding, &fileencoding)
+    let i = 0
+    let len = len(char_fenc)
+    let hex_code = ''
+    while i < len
+        let hex_code .= printf('%.2x',char2nr(char_fenc[i]))
+        let i += 1
+    endwhile
+    echo '<' . char_enc . '> Hex ' . hex_code . ' (' .
+          \(&fileencoding != '' ? &fileencoding : &encoding) . ')'
+endfunction
+
+" Key mapping to display the current character in its 'file encoding'
+nmap <silent> <unique> gn :call <SID>EchoCharCode()<CR>
+
+" End of Encoding }}}
+
+" UI {{{
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+colo lucius
+LuciusDark
+if has('gui_running')
+    if has('mac')
+        set guifont=Monaco:h14
+    elseif has('win32') || has('win64')
+        set guifont=Consolas:h14:cANSI
+        set guifontwide=YaHei\ Consolas\ Hybrid:h14
+    else
+        set guifont=Monospace:h14
+    endif
+endif
+
+" Activate 256 colors independently of terminal, except Mac console mode
+if !(has('mac') && !has('gui_running'))
+    set t_Co=256
+endif
+
+" Switch on syntax highlighting.
+syntax on
+
+" End of UI }}}
+
+" Editting {{{
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+filetype plugin indent on
+
+if has('unix')
+    if isdirectory("$HOME/.vim_tmp")
+        set directory=$HOME/.vim_tmp
+    else
+        set directory=/tmp
+    endif
+elseif has('win32') || has('win64')
+    set directory=$TMP
+endif
+
+" allow backspacing over everything in insert mode
+set backspace=indent,eol,start
+
+set autochdir
+
+set nobackup
+
+" keep 400 lines of command line history
+set history=400
+
+" Disable middlemouse paste
+noremap <silent> <unique> <MiddleMouse> <LeftMouse>
+map <silent> <unique> <2-MiddleMouse> <Nop>
+imap <silent> <unique> <2-MiddleMouse> <Nop>
+map <silent> <unique> <3-MiddleMouse> <Nop>
+imap <silent> <unique> <3-MiddleMouse> <Nop>
+map <silent> <unique> <4-MiddleMouse> <Nop>
+imap <silent> <unique> <4-MiddleMouse> <Nop>
+
+"如果想输入jj 那...
+imap <silent> <unique> jj <ESC> :w<CR><ESC>
+
+" Disable arrow
+ " nnoremap <silent> <unique> <Up> <Nop>
+nnoremap <silent> <unique> OA <Nop>
+ " nnoremap <silent> <unique> <Down> <Nop>
+nnoremap <silent> <unique> OB <Nop>
+ " nnoremap <silent> <unique> <Left> <Nop>
+nnoremap <silent> <unique> OD <Nop>
+ " nnoremap <silent> <unique> <Right> <Nop>
+nnoremap <silent> <unique> OC <Nop>
+
+ " inoremap <silent> <unique> <Up> <Nop>
+inoremap <silent> <unique> OA <Nop>
+ " inoremap <silent> <unique> <Down> <Nop>
+inoremap <silent> <unique> OB <Nop>
+ " inoremap <silent> <unique> <Left> <Nop>
+inoremap <silent> <unique> OD <Nop>
+ " inoremap <silent> <unique> <Right> <Nop>
+inoremap <silent> <unique> OC <Nop>
+
+" Disable bell on errors
+set noerrorbells
+set novisualbell
+au VimEnter * set vb t_vb=
+
+" remap Y to work logically
+nmap Y y$
+
+" Key mapping for confirmed exiting
+nnoremap <silent> <unique> ZZ :confirm qa<CR>
+
+" Create a new tabpage
+nnoremap <silent> <unique> <Leader><Tab> :tabnew<CR>
+
+" Redirect command output to standard output and temp file
+if has('unix')
+    set shellpipe=2>&1\|\ tee
+endif
+
+" Quote shell if it contains space and is not quoted
+if &shell =~? '^[^"].* .*[^"]'
+    let &shell = '"' . &shell . '"'
+endif
+
+if has('filterpipe')
+    set noshelltemp
+endif
+
+" Execute command without disturbing registers and cursor postion.
+function s:Preserve(command)
+    " Preparation: save last search, and cursor position.
+    let _s=@/
+    let l = line(".")
+    let c = col(".")
+    " Do the business:
+    execute a:command
+    " Clean up: restore previous search history, and cursor position
+    let @/=_s
+    call cursor(l, c)
+endfunction
+
+function s:RemoveTrailingSpaces()
+    call s:Preserve('%s/\s\+$//e')
+endfunction
+
+" Remove trailing spaces for all files
+au BufWritePre * call s:RemoveTrailingSpaces()
+
+" End of Editting }}}
+
+" Searching/Matching {{{
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" incremental searching
+set incsearch
+
+" highlight the last used search pattern.
+set hlsearch
+
+" Use external grep command for performance
+" On Windows, install 'grep' from:
+" http://gnuwin32.sourceforge.net/packages/grep.htm
+set grepprg=grep\ -Hn
+
+set gdefault
+
+" Find buffer more friendly
+set switchbuf=usetab
+
+" :help CTRL-W_gf
+" :help CTRL-W_gF
+nnoremap <silent> gf <C-w>gf
+nnoremap <silent> gF <C-w>gF
+
+" Quick moving between tabs
+nnoremap <silent> <unique> <C-Tab> gt
+
+" Quick moving between windows
+nnoremap <silent> <unique> <Leader>w <C-w>w
+
+" To make remapping ESC work porperly in console mode by disabling esckeys.
+if !has('gui_running')
+    set noesckeys
+endif
+" remap <ESC> to stop searching highlight
+nnoremap <silent> <unique> <ESC> :nohls<CR><ESC>
+imap <silent> <unique> <ESC> <C-o><ESC>
+
+
+" move around the visual lines
+nnoremap <silent> <unique> j gj
+nnoremap <silent> <unique> k gk
+
+" move around the quickfix windows
+nmap <silent> <unique> <C-p> :cp<CR>
+nmap <silent> <unique> <C-n> :cn<CR>
+
+" Make cursor move smooth
+set whichwrap+=<,>,h,l
+
+set ignorecase
+set smartcase
+
+set wildmenu
+
+set wildignore+=*.o
+set wildignore+=*.obj
+set wildignore+=*.bak
+set wildignore+=*.exe
+set wildignore+=*.swp
+
+nmap <silent> <unique> <Tab> %
+
+nnoremap <unique> / /\v
+vnoremap <unique> / /\v
+
+" Support */# in visual mode
+function s:VSetSearch()
+    let temp = @@
+    normal! gvy
+    let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
+    let @@ = temp
+endfunction
+
+vnoremap <silent> <unique> * :<C-u>call <SID>VSetSearch()<CR>//<CR>
+vnoremap <silent> <unique> # :<C-u>call <SID>VSetSearch()<CR>??<CR>
+
+" End of Searching/Matching }}}
+
+" Formats/Style {{{
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set smarttab
+set autoindent
+set smartindent
+set display=lastline
+set clipboard=unnamed
+
+if has('win32') || has('win64')
+    set shellslash
+endif
+
+vmap <Tab> >gv
+vmap <S-Tab> <gv
+
+set scrolloff=7
+if has('gui_running')
+    set guioptions-=m
+    set guioptions-=T
+    set guioptions+=c
+endif
+set titlelen=0
+
+" Make vim CJK-friendly
+set formatoptions+=mM
+
+" Show line number
+set number
+
+set cursorline
+
+set statusline=%<%f\ %h%m%r%=%k[%{(&fenc==\"\")?&enc:&fenc}%{(&bomb?\",BOM\":\"\")}]\ %-6.(%l,%c%V%)\ [%{&ff}]\ %y\ %P
+let &statusline = substitute(&statusline,
+                            \'%=',
+                            \'%=%{winwidth(0)}x%{winheight(0)}   ',
+                            \'')
+set laststatus=2
+
+set fileformats=unix,dos
+
+" Function to insert the current date
+function s:InsertCurrentDate()
+    let curr_date = strftime('%Y-%m-%d', localtime())
+    silent! exec 'normal! gi' .  curr_date . "\<ESC>a"
+endfunction
+
+" Key mapping to insert the current date
+imap <silent> <unique> <Leader><C-d> <C-o>:call <SID>InsertCurrentDate()<CR>
+
+" Eliminate comment leader when joining comment lines
+function s:JoinWithLeader(count, leaderText)
+    let l:linecount = a:count
+    " default number of lines to join is 2
+    if l:linecount < 2
+        let l:linecount = 2
+    endif
+    echo l:linecount . " lines joined"
+    " clear errmsg so we can determine if the search fails
+    let v:errmsg = ''
+
+    " save off the search register to restore it later because we will clobber
+    " it with a substitute command
+    let l:savsearch = @/
+
+    while l:linecount > 1
+        " do a J for each line (no mappings)
+        normal! J
+        " remove the comment leader from the current cursor position
+        silent! execute 'substitute/\%#\s*\%('.a:leaderText.'\)\s*/ /'
+        " check v:errmsg for status of the substitute command
+        if v:errmsg=~'E486'
+            " just means the line wasn't a comment - do nothing
+        elseif v:errmsg!=''
+            echo "Problem with leader pattern for s:JoinWithLeader()!"
+        else
+            " a successful substitute will move the cursor to line beginning,
+            " so move it back
+            normal! ``
+        endif
+        let l:linecount = l:linecount - 1
+    endwhile
+    " restore the @/ register
+    let @/ = l:savsearch
+endfunction
+
+function s:MapJoinWithLeaders(leaderText)
+    let l:leaderText = escape(a:leaderText, '/')
+    " visual mode is easy - just remove comment leaders from beginning of lines
+    " before using J normally
+    exec "vnoremap <silent> <buffer> J :<C-u>let savsearch=@/<Bar>'<+1,'>".
+                \'s/^\s*\%('.
+                \l:leaderText.
+                \'\)\s*/<Space>/e<Bar>'.
+                \'let @/=savsearch<Bar>unlet savsearch<CR>'.
+                \'gvJ'
+    " normal mode is harder because of the optional count - must use a function
+    exec "nnoremap <silent> <buffer> J :<C-u>call <SID>JoinWithLeader(v:count, '".l:leaderText."')<CR>"
+endfunction
+
+" End of Formats/Style }}}
+
+" Bash {{{
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" :help ft-bash-syntax
+let g:is_bash = 1
+
+" End of Bash }}}
+
+" C/C++ {{{
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function s:GNUIndent()
+    setlocal cinoptions=>4,n-2,{2,^-2,:2,=2,g0,h2,p5,t0,+2,(0,u0,w1,m1
+    setlocal shiftwidth=2
+    setlocal tabstop=8
+endfunction
+
+function s:SetSysTags()
+    " include system tags, :help ft-c-omni
+    if has('unix')
+        set tags+=$HOME/.vim/systags
+        set tags+=$PWD/tags
+        set tags+=$PWD/../tags
+        set tags+=$PWD/../../tags
+    elseif has('win32') || has('win64')
+        set tags+=$VIM/vimfiles/systags
+    endif
+endfunction
+
+function s:HighlightSpaceErrors()
+    " Highlight space errors in C/C++ source files.
+    " :help ft-c-syntax
+    let g:c_space_errors = 1
+endfunction
+
+function s:TuneCHighlight()
+    " Tune for C highlighting
+    " :help ft-c-syntax
+    let g:c_gnu = 1
+    let g:c_no_curly_error = 1
+endfunction
+
+" Setup  my favorite C/C++ indent
+function s:SetCPPIndent()
+    setlocal cinoptions=(0,t0,w1 shiftwidth=4 tabstop=4
+endfunction
+
+" Setup basic C/C++ development envionment
+function s:SetupCppEnv()
+    call s:SetSysTags()
+    call s:HighlightSpaceErrors()
+    call s:TuneCHighlight()
+    call s:SetCPPIndent()
+endfunction
+
+" Setting for files following the GNU coding standard
+if has('unix')
+    au BufEnter /usr/include/* call s:GNUIndent()
+elseif has('win32') || has('win64')
+    " XXX: change it. It's just for my environment.
+    au BufEnter e:/project/g++/* call s:GNUIndent()
+    set makeprg=nmake
+endif
+
+au FileType c,cpp setlocal commentstring=\ //%s
+au FileType c,cpp call s:SetupCppEnv()
+au FileType c,cpp call s:MapJoinWithLeaders('//\\|\\')
+
+" End of C/C++ }}}
+
+" Help {{{
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+au FileType help nnoremap <buffer> <silent> q :q<CR>
+
+" End of help }}}
+
+" HTML {{{
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Let TOhtml output <PRE> and style sheet
+let g:html_use_css = 1
+let g:use_xhtml = 1
+au FileType html,xhtml setlocal indentexpr=
+
+" End of HTML }}}
+
+" Lua {{{
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Run the current buffer as lua code
+function s:RunAsLuaCode(s, e)
+    pclose!
+    silent exec a:s . ',' . a:e . 'y a'
+    belowright new
+    silent put a
+    silent %!lua -
+    setlocal previewwindow
+    setlocal noswapfile buftype=nofile bufhidden=wipe
+    setlocal nobuflisted nowrap cursorline nonumber fdc=0
+    setlocal ro nomodifiable
+    wincmd p
+endfunction
+
+function s:SetupAutoCmdForRusAsLuaCode()
+    nnoremap <buffer> <silent> <Leader>e :call <SID>RunAsLuaCode('1', '$')<CR>
+    command! -range Eval :call s:RunAsLuaCode(<line1>, <line2>)
+    vnoremap <buffer> <silent> <Leader>e :Eval<CR>
+endfunction
+
+au FileType lua call s:SetupAutoCmdForRusAsLuaCode()
+au FileType lua call s:MapJoinWithLeaders('--\\|\\')
+
+" End of Lua }}}
+
+" Make {{{
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+au FileType make setlocal noexpandtab
+au FileType make call s:MapJoinWithLeaders('#\\|\\')
+
+" End of make }}}
+
+" Python {{{
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:python_highlight_all = 1
+
+" Run the current buffer as python code
+function s:RunAsPythonCode(s, e)
+    pclose!
+    silent exec a:s . ',' . a:e . 'y a'
+    belowright new
+    silent put a
+    silent %!python -
+    setlocal previewwindow
+    setlocal noswapfile buftype=nofile bufhidden=wipe
+    setlocal nobuflisted nowrap cursorline nonumber fdc=0
+    setlocal ro nomodifiable
+    wincmd p
+endfunction
+
+function s:SetupAutoCmdForRusAsPythonCode()
+    nnoremap <buffer> <silent> <Leader>e :call <SID>RunAsPythonCode('1', '$')<CR>
+    command! -range Eval :call s:RunAsPythonCode(<line1>, <line2>)
+    vnoremap <buffer> <silent> <Leader>e :Eval<CR>
+endfunction
+
+au FileType python setlocal commentstring=\ #%s
+au FileType python call s:SetupAutoCmdForRusAsPythonCode()
+au FileType python call s:MapJoinWithLeaders('#\\|\\')
+" End of Python }}}
+
+" Scons {{{
+" http://www.vim.org/scripts/script.php?script_id=1709
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+au BufNewFile,BufRead SCons* set filetype=scons
+" End of Scons }}}
+
+"  VimL {{{
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Run the current buffer as VimL
+function s:RunAsVimL(s, e)
+    pclose!
+    let lines = getline(a:s, a:e)
+    let file = tempname()
+    call writefile(lines, file)
+    redir @e
+    silent exec ':source ' . file
+    call delete(file)
+    redraw
+    redir END
+
+    if strlen(getreg('e')) > 0
+        belowright new
+        redraw
+        setlocal previewwindow
+        setlocal noswapfile buftype=nofile bufhidden=wipe
+        setlocal nobuflisted nowrap cursorline nonumber fdc=0
+        syn match ErrorLine +^E\d\+:.*$+
+        hi link ErrorLine Error
+        silent put e
+        setlocal ro nomodifiable
+        wincmd p
+    endif
+endfunction
+
+function s:SetupAutoCmdForRunAsVimL()
+    nnoremap <buffer> <silent> <Leader>e :call <SID>RunAsVimL('1', '$')<CR>
+    command! -range Eval :call s:RunAsVimL(<line1>, <line2>)
+    vnoremap <buffer> <silent> <Leader>e :Eval<CR>
+endfunction
+
+au FileType vim setlocal commentstring=\ \"%s
+au FileType vim call s:SetupAutoCmdForRunAsVimL()
+au FileType vim call s:MapJoinWithLeaders('"\\|\\')
+
+" End of VimL }}}
+
+"  vimrc {{{
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" If current buffer is noname and empty, use current buffer.
+" Otherwise use new tab
+function s:OpenFileWithProperBuffer(file)
+    if bufname('%') == '' && &modified == 0 && &modifiable == 1
+        exec 'edit ' . a:file
+    else
+        exec 'tabedit' . a:file
+    endif
+endfunction
+
+" Fast editing of vimrc
+function s:OpenVimrc()
+    if has('unix')
+        call s:OpenFileWithProperBuffer('$HOME/.vimrc')
+    elseif has('win32') || has('win64')
+        call s:OpenFileWithProperBuffer('$VIM/_vimrc')
+    endif
+endfunction
+
+nmap <silent> <Leader>v :call <SID>OpenVimrc()<CR>
+
+" Automatically update change time in vimrc
+function s:UpdateLastChangeTime()
+    let last_change_anchor = '\(" Last Change:\s\+\)\d\{4}-\d\{2}-\d\{2} \d\{2}:\d\{2}:\d\{2}'
+    let last_change_line = search('\%^\_.\{-}\(^\zs' . last_change_anchor . '\)',
+                               \'n')
+    if last_change_line != 0
+        let last_change_time = strftime('%Y-%m-%d %H:%M:%S', localtime())
+        let last_change_text = substitute(getline(last_change_line),
+                                       \'^' . last_change_anchor,
+                                       \'\1',
+                                       \'') . last_change_time
+        call setline(last_change_line, last_change_text)
+    endif
+endfunction
+
+au BufWritePre *vimrc call s:UpdateLastChangeTime()
+
+" End of vimrc }}}
+
+set nocompatible
+
+" vim: set et sw=4 ts=4 fdm=marker ff=unix:
