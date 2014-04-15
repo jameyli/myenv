@@ -129,7 +129,7 @@ let g:airline#extensions#tabline#show_tab_nr = 1
 let g:airline#extensions#tabline#fnamemod = ':p:t'
 let g:airline#extensions#tabline#show_tab_type = 0
 
- " let g:airline_theme=
+let g:airline_theme="badwolf"
 
 let g:airline#extensions#tagbar#flags = 's'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
