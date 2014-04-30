@@ -1,11 +1,12 @@
 # .bashrc
 # vim: set et sw=4 ts=4 fdm=marker ff=unix ft=sh:
 
-export PATH=/usr/local/mysql/bin:/sbin:/usr/sbin:/usr/local/sbin:/opt/gnome/sbin:/usr/local/bin:/usr/bin:/usr/X11R6/bin:/bin:/usr/games
-export PATH=$PATH:/opt/CollabNet_Subversion/bin:/usr/local/bin:~/bin
-export PATH=$PATH:/Volumes/dev/homebrew/bin
-export PATH=$PATH:/usr/texbin
-export PATH=$PATH:~/usr/bin
+export PATH=~/.myenv/script:/usr/local/homebrew/bin:/usr/local/bin:$PATH
+
+# export PATH=/usr/local/mysql/bin:/sbin:/usr/sbin:/usr/local/sbin:/opt/gnome/sbin:/usr/local/bin:/usr/bin:/usr/X11R6/bin:/bin:/usr/games
+# export PATH=$PATH:/opt/CollabNet_Subversion/bin:/usr/local/bin:~/bin
+# export PATH=$PATH:/usr/texbin
+# export PATH=$PATH:~/usr/bin
 
 #User specific aliases and functions
 

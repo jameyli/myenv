@@ -3,12 +3,12 @@ set nocompatible              " be iMproved, required
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/vimfiles/bundle/vundle/
+set rtp+=~/.vim/vimfiles/Vundle.vim/
 call vundle#rc('~/.vim/vimfiles/bundle')
 
 """""""""""""git repo"""""""""""""""""
 " let Vundle manage Vundle, required
-Plugin 'gmarik/vundle'
+"Plugin 'gmarik/Vundle.vim'
 
 Plugin 'Valloric/YouCompleteMe'
 " YCM {{{
@@ -22,6 +22,8 @@ set cot="menu"
 
 let g:ycm_error_symbol = '✗'
 let g:ycm_warning_symbol = '⚠'
+
+let g:ycm_seed_identifiers_with_syntax = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "}}}
@@ -113,9 +115,16 @@ let g:delimitMate_balance_matchpairs = 1
 
 Plugin 'plasticboy/vim-markdown'
 
-" mac only
-Bundle 'rizzatti/funcoo.vim'
-Bundle 'rizzatti/dash.vim'
+ " " mac only
+ " Bundle 'rizzatti/funcoo.vim'
+ " Bundle 'rizzatti/dash.vim'
+ " " Plugin - dash {{{
+ " " Mac Only
+ " """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+ " " Key mappings for toggling tagbar window
+ " nmap <silent> <unique> <Leader>d :Dash<CR>
+
+ " " End of Dash }}}
 
 Bundle 'bling/vim-airline'
 " airline {{{
@@ -137,8 +146,13 @@ let g:airline#extensions#tagbar#flags = 's'
 
 Bundle 'chrisbra/csv.vim'
 
+Bundle 'octol/vim-cpp-enhanced-highlight'
+
 """""""""""""vim scripts"""""""""""""""""
 Plugin 'lucius'
+colo lucius
+LuciusDark
+
 Plugin 'a.vim'
 " a.vim {{{
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -214,13 +228,6 @@ Plugin 'fencview.vim'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " End of Syntastic }}}
-" Plugin - dash {{{
-" Mac Only
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Key mappings for toggling tagbar window
-nmap <silent> <unique> <Leader>d :Dash<CR>
-
-" End of Dash }}}
 " Plugin - bufexplorer {{{
 " http://www.vim.org/scripts/script.php?script_id=42
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

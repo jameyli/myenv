@@ -9,7 +9,7 @@
 "           has('gui_win32') means Windows 32 bit GUI version.
 "           has('gui_win64') means Windows 64 bit GUI version.
 "           has('gui_running') means in GUI mode.
-" Last Change: 2014-04-10 15:21:38
+" Last Change: 2014-04-29 20:01:21
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -142,8 +142,6 @@ nmap <silent> <unique> gn :call <SID>EchoCharCode()<CR>
 
 " UI {{{
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-colo lucius
-LuciusDark
 if has('gui_running')
     if has('mac')
         set guifont=Monaco:h14
@@ -666,6 +664,14 @@ function s:OpenVimrc()
 endfunction
 
 nmap <silent> <Leader>v :call <SID>OpenVimrc()<CR>
+
+function s:OpenVimrcBundle()
+    if has('unix')
+        call s:OpenFileWithProperBuffer('$HOME/.vim/vimrc_bundle.vim')
+    endif
+endfunction
+
+nmap <silent> <Leader>V :call <SID>OpenVimrcBundle()<CR>
 
 " Automatically update change time in vimrc
 function s:UpdateLastChangeTime()

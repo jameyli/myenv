@@ -17,13 +17,32 @@
 ###
 
 # .bash_profile
-ln -sf $PWD/dot_bashrc ~/.bashrc
-ln -sf $PWD/dot_zshrc ~/.zshrc
+MYENV=${PWD}
+echo ${MYENV}
+
+rm -f ~/.myenv
+ln -s ${MYENV} ~/.myenv
+
+if [ `echo $SHELL | grep -e zsh` ]; then
+    echo "zsh"
+    rm -f ~/.zshrc
+    ln -s ${MYENV}/dot_zshrc ~/.zshrc
+else
+    echo "bash"
+    rm -f ~/.bashrc
+    ln -s ${MYENV}/dot_bashrc ~/.bashrc
+fi
+
+source ${MYENV}/dot_bashrc
 
 # vim
-ln -sf $PWD/vim ~/.vim
-ln -sf $PWD/../vimwiki ~/vimwiki
+rm -f ~/.vim
+ln -s ${MYENV}/vim ~/.vim
+# ln -sf ${MYENV}/../vimwiki ~/vimwiki
 
-source ~/.bashrc
+#git
+rm -f ~/.gitconfig
+ln -s ${MYENV}/dot_gitconfig ~/.gitconfig
+
 
 
