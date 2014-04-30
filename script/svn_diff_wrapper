@@ -1,0 +1,16 @@
+#!/bin/sh
+# 配置你喜欢的diff程序路径
+DIFF="vimdiff"
+# SVN diff命令会传入两个文件的参数
+LEFT=${6}
+RIGHT=${7}
+# 拼接成diff命令所需要的命令格式
+$DIFF $LEFT $RIGHT
+
+# 把这个文件改名为svndiff，放在/usr/local/bin/目录里，并给执行权限
+# 然后修改~/.subversion/config文件，将其中
+
+# # diff-cmd = diff_program (diff, gdiff, etc.)
+
+# 修改成
+# diff-cmd = /usr/local/bin/svndiff
