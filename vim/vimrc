@@ -9,7 +9,7 @@
 "           has('gui_win32') means Windows 32 bit GUI version.
 "           has('gui_win64') means Windows 64 bit GUI version.
 "           has('gui_running') means in GUI mode.
-" Last Change: 2014-04-29 20:01:21
+" Last Change: 2014-05-01 11:14:38
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -187,6 +187,12 @@ set nobackup
 " keep 400 lines of command line history
 set history=400
 
+"如果想输入jj 那...
+imap <silent> <unique> jj <ESC> :w<CR><ESC>
+"buff go to
+noremap <silent> <unique> gb :bnext<CR><ESC>
+noremap <silent> <unique> gB :bprevious<CR><ESC>
+
 " Disable middlemouse paste
 noremap <silent> <unique> <MiddleMouse> <LeftMouse>
 map <silent> <unique> <2-MiddleMouse> <Nop>
@@ -196,8 +202,6 @@ imap <silent> <unique> <3-MiddleMouse> <Nop>
 map <silent> <unique> <4-MiddleMouse> <Nop>
 imap <silent> <unique> <4-MiddleMouse> <Nop>
 
-"如果想输入jj 那...
-imap <silent> <unique> jj <ESC> :w<CR><ESC>
 
 " Disable arrow
  " nnoremap <silent> <unique> <Up> <Nop>

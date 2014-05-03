@@ -146,7 +146,9 @@ let g:airline#extensions#tagbar#flags = 's'
 
 Bundle 'chrisbra/csv.vim'
 
-Bundle 'octol/vim-cpp-enhanced-highlight'
+ " Bundle 'octol/vim-cpp-enhanced-highlight'
+
+Bundle 'yakiang/excel.vim'
 
 """""""""""""vim scripts"""""""""""""""""
 Plugin 'lucius'

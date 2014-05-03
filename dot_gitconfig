@@ -1,7 +1,9 @@
 [diff]
-    external = git_diff_wrapper
+    external = ~/.myenv/script/git_diff_wrapper
 [core]
     pager =
 [user]
 	name = jameyli
 	email = lgy@live.com
+[push]
+	default = matching
