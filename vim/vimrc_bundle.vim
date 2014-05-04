@@ -195,11 +195,7 @@ let g:load_doxygen_syntax = 1
 let g:DoxygenToolkit_commentType = "C"
 let g:DoxygenToolkit_dateTag = "@date:   "
 " XXX: Change it. It's just for my environment.
-if expand("$USERNAME") == "jameyli"
-    let g:DoxygenToolkit_authorName = "jameyli"
-else
-    let g:DoxygenToolkit_authorName = "jameyli <jameyli AT tencent DOT com>"
-endif
+let g:DoxygenToolkit_authorName = "jameyli <lgy AT live DOT com>"
 let g:DoxygenToolkit_versionString = ""
 let g:DoxygenToolkit_versionTag = ""
 let g:DoxygenToolkit_briefTag_pre = "@brief:  "
