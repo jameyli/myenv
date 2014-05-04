@@ -9,10 +9,8 @@
 "           has('gui_win32') means Windows 32 bit GUI version.
 "           has('gui_win64') means Windows 64 bit GUI version.
 "           has('gui_running') means in GUI mode.
-" Last Change: 2014-05-01 11:14:38
+" Last Change: 2014-05-04 16:57:19
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
 
 " General {{{
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -27,7 +25,6 @@ au!
 " Use Vim settings, rather then Vi settings.
 " This option must be first, because it changes other options.
 set nocompatible
-
 
 let maplocalleader = ","
 let mapleader = ","
