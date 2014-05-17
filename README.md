@@ -26,7 +26,7 @@ install brew On MacOX
 1. shell
 ==========
 
-1. install zsh
+a. install zsh
 ---------------
 
     brew install zsh
@@ -37,7 +37,7 @@ install brew On MacOX
 2. vim
 =======
 
-0. install vim
+a. install vim
 --------------
 
 on MacOX
@@ -48,7 +48,7 @@ or
     hg clone hg clone https://vim.googlecode.com/hg/vim
     cp and exec "build_vim.sh"
 
-1. install deps
+b. install deps
 -------------------
 
 use brew or tar:
@@ -60,7 +60,8 @@ use go get:
 * gocode for go complete
 * godef for go goto define
 
-2. install scripts
+
+c. install scripts
 --------------------
 
 shell in any dir, do:
@@ -71,7 +72,7 @@ if use YCM
     cd ~/.vim/vimfile/bundle/YouCompleteMe
     ./install.sh --clang-completer --system-libclang
 
-3. others
+c. others
 -----------
 配置文件直接可以使用
 * vimrc   基础设置
