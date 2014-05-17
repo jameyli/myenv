@@ -4,26 +4,24 @@ myenv
 开发环境设置
 My Develop Environment Init
 
-主要以MacOX为主, 大多数情况下再linux也是可以正常运行的。
+主要以MacOX为主, 大多数情况下在linux也是可以正常运行的。
 
 0. How to Insall?
 ===================
 
-
-first install
----------------
+first
+------
 
     git clone git@github.com:jameyli/myenv.git
     cd myenv
     git submodule update
     ./build_env.sh
 
-second install brew On MacOX
--------------------
-
+second
+------
+install brew On MacOX
     ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
 当然所有使用brew安装的软件都可以使用源码来安装
-
 
 1. shell
 ==========
@@ -36,7 +34,6 @@ second install brew On MacOX
 
 如果不用zsh 可以略去
 
-
 2. vim
 =======
 
@@ -46,7 +43,6 @@ second install brew On MacOX
 on MacOX
 
     brew install vim
-
 or
 
     hg clone hg clone https://vim.googlecode.com/hg/vim
@@ -58,12 +54,10 @@ or
 use brew or tar:
 * clang for YCM(YouCompleteMe)
 * ctags for c/c++ tagbar
-
 use go get:
 * gotags for go tagbar
 * gocode for go complete
 * godef for go goto define
-
 
 2. install scripts
 --------------------
