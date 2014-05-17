@@ -20,7 +20,9 @@ first
 second
 ------
 install brew On MacOX
+
     ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+
 当然所有使用brew安装的软件都可以使用源码来安装
 
 1. shell
@@ -65,10 +67,12 @@ c. install scripts
 --------------------
 
 shell in any dir, do:
+
     vim
     :BundleUpdate
 
 if use YCM
+
     cd ~/.vim/vimfile/bundle/YouCompleteMe
     ./install.sh --clang-completer --system-libclang
 
