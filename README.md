@@ -54,6 +54,7 @@ or
 use brew or tar:
 * clang for YCM(YouCompleteMe)
 * ctags for c/c++ tagbar
+
 use go get:
 * gotags for go tagbar
 * gocode for go complete
