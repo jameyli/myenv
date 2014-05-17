@@ -6,6 +6,11 @@ filetype off                  " required
 set rtp+=~/.vim/vimfiles/Vundle.vim/
 call vundle#rc('~/.vim/vimfiles/bundle')
 
+" golang
+set rtp+=/usr/local/homebrew/opt/go/libexec/misc/vim
+au BufRead,BufNewFile *.go set filetype=go
+au FileType go au BufWritePre <buffer> Fmt
+
 """""""""""""git repo"""""""""""""""""
 
 Plugin 'Valloric/YouCompleteMe'
@@ -20,6 +25,17 @@ let g:ycm_error_symbol = '✗'
 let g:ycm_warning_symbol = '⚠'
 
 let g:ycm_seed_identifiers_with_syntax = 1
+let g:ycm_complete_in_comments = 1
+
+" in .go just for ultisnips
+let g:ycm_filetype_whitelist = {
+            \'c': 1,
+            \'cpp': 1,
+            \'objc': 1,
+            \'go': 1,
+            \'python': 1
+            \}
+
 "}}}
 
 Plugin 'SirVer/ultisnips'
@@ -87,6 +103,35 @@ let g:tagbar_left = 1
 let g:tagbar_autofocus = 1
 let g:tagbar_sort = 0
 let g:tagbar_autoshowtag = 1
+
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+\ }
+
 " }}}
 
 Plugin 'Raimondi/delimitMate'
@@ -101,15 +146,15 @@ let g:delimitMate_balance_matchpairs = 1
 Plugin 'plasticboy/vim-markdown'
 
  " " mac only
- " Bundle 'rizzatti/funcoo.vim'
- " Bundle 'rizzatti/dash.vim'
- " " Plugin - dash {{{
- " " Mac Only
- " """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
- " " Key mappings for toggling tagbar window
- " nmap <silent> <unique> <Leader>d :Dash<CR>
+Bundle 'rizzatti/funcoo.vim'
+Bundle 'rizzatti/dash.vim'
+" Plugin - dash {{{
+" Mac Only
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Key mappings for toggling tagbar window
+nmap <silent> <unique> <Leader>d :Dash<CR>
 
- " " End of Dash }}}
+" End of Dash }}}
 
 Bundle 'bling/vim-airline'
 " airline {{{
@@ -130,6 +175,10 @@ Bundle 'yakiang/excel.vim'
 
 Bundle 'tpope/vim-fugitive'
 
+Bundle 'nsf/gocode', {'rtp': 'vim/'}
+Bundle 'dgryski/vim-godef'
+let g:godef_same_file_in_same_window=1
+let g:godef_split=0
 """""""""""""vim scripts"""""""""""""""""
 Plugin 'lucius'
 colo lucius
