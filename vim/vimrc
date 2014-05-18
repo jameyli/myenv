@@ -13,7 +13,7 @@
 "                        ##############.JJJ.JJJJJJJJJJ
 "                        ############...JJ...JJ..JJ  JJ
 "                        ##########....JJ...JJ..JJ  JJ
-"                        ########......JJJ..JJJ JJJ JJJ
+"                        ########.....JJJ..JJJ JJJ JJJ
 "                        ######    .........
 "                                    .....
 "                                      .
@@ -29,7 +29,7 @@
 "           has('gui_win32') means Windows 32 bit GUI version.
 "           has('gui_win64') means Windows 64 bit GUI version.
 "           has('gui_running') means in GUI mode.
-" Last Change: 2014-05-18 18:20:49
+" Last Change: 2014-05-18 18:25:05
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " General {{{
