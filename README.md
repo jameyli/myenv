@@ -82,36 +82,16 @@ c. others
 * [vimrc](vim/vimrc)   基础设置
 * [vimrc_bundle.vim](vim/vimrc_bundle.vim)   插件管理
 
-d. 插件简介
+d. 主要插件简介
 ------------
 
 * [gmarik/Vundle.vim]  插件管理
 * [Valloric/YouCompleteMe] c-family/python 代码补全
-* [SirVer/ultisnips]
-* [honza/vim-snippets]
 * [scrooloose/nerdtree] 目录
 * [scrooloose/nerdcommenter] 注释
 * [kien/ctrlp.vim] 快速模糊查找
-* [tpope/vim-surround]
-* [Lokaltog/vim-easymotion]
 * [majutsushi/tagbar]
-* [Raimondi/delimitMate]
-* [plasticboy/vim-markdown]
-* [rizzatti/funcoo.vim]
-* [rizzatti/dash.vim]
 * [bling/vim-airline]
-* [chrisbra/csv.vim]
-* [tpope/vim-fugitive]
-* [nsf/gocode]
-* [dgryski/vim-godef]
-* [lucius]
-* [a.vim]
-* [grep.vim]
-* [mru.vim]
-* [DoxygenToolkit.vim]
-* [TaskList.vim]
-* [LargeFile]
-* [fencview.vim]
 
 3. script
 ==========
