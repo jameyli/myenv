@@ -36,10 +36,10 @@ a. install [zsh]
 
 如果不用[zsh] 可以略去
 
-2. [vim]
+2. vim
 =======
 
-[go here](vim/README.md)
+[Go Here](vim/README.md)
 
 3. script
 ==========
@@ -50,7 +50,5 @@ a. install [zsh]
 
 [homebrew]:http://brew.sh/
 [zsh]:http://www.zsh.org/
-[vim]:http://www.vim.org/
-[clang]:http://clang.llvm.org/
 
 
