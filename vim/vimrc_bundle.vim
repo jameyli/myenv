@@ -32,6 +32,7 @@ let g:ycm_filetype_whitelist = {
             \'c': 1,
             \'cpp': 1,
             \'objc': 1,
+            \'cs': 1,
             \'go': 1,
             \'python': 1
             \}
@@ -258,6 +259,8 @@ let g:bufExplorerShowDirectories=0
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nmap <silent> <unique> <Leader>S :call SyntaxAttr()<CR>
 " End of SyntaxAttr }}}
+
+Plugin 'toyamarinyon/vim-swift'
 
 set nocompatible
 filetype plugin indent on     " required
