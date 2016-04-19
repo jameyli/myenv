@@ -9,7 +9,7 @@ call vundle#rc('~/.vim/vimfiles/bundle')
 " golang
 set rtp+=/usr/local/homebrew/opt/go/libexec/misc/vim
 au BufRead,BufNewFile *.go set filetype=go
-au FileType go au BufWritePre <buffer> Fmt
+ " au FileType go au BufWritePre <buffer> Fmt
 
 """""""""""""git repo"""""""""""""""""
 
@@ -54,6 +54,8 @@ let g:UltiSnipsEditSplit="vertical"
 " Snippets are separated from the engine. Add this if you want them:
 Bundle 'honza/vim-snippets'
 
+Bundle "docunext/closetag.vim"
+
 Plugin 'scrooloose/nerdtree'
 " NERD tree {{{
 " Set the window position
@@ -95,11 +97,15 @@ map <Leader>l <Plug>(easymotion-linebackward)
 let g:EasyMotion_startofline = 0 " keep cursor colum when JK motion
 "}}}
 
+Plugin 'kshenoy/vim-signature'
+Plugin 'terryma/vim-multiple-cursors'
+"Plugin 'szw/vim-ctrlspace'
+
 Plugin 'majutsushi/tagbar'
 " Tagbar {{{
 " Key mappings for toggling tagbar window
 nmap <silent> <unique> <Leader>t :TagbarToggle<CR>
-let g:tagbar_ctags_bin = 'ctags'
+let g:tagbar_ctags_bin = '/usr/local/homebrew/bin/ctags'
 let g:tagbar_left = 1
 let g:tagbar_autofocus = 1
 let g:tagbar_sort = 0
@@ -158,6 +164,7 @@ nmap <silent> <unique> <Leader>d :Dash<CR>
 " End of Dash }}}
 
 Bundle 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 " airline {{{
 let g:airline#extensions#tabline#enabled = 1
  " let g:airline#extensions#tabline#show_buffers = 1
@@ -172,14 +179,15 @@ let g:airline#extensions#tagbar#flags = 's'
 
 Bundle 'chrisbra/csv.vim'
 
-Bundle 'yakiang/excel.vim'
+ " Bundle 'yakiang/excel.vim'
 
 Bundle 'tpope/vim-fugitive'
 
-Bundle 'nsf/gocode', {'rtp': 'vim/'}
-Bundle 'dgryski/vim-godef'
-let g:godef_same_file_in_same_window=1
-let g:godef_split=0
+ " Bundle 'nsf/gocode', {'rtp': 'vim/'}
+ " Bundle 'dgryski/vim-godef'
+ " let g:godef_same_file_in_same_window=1
+ " let g:godef_split=0
+ " Bundle 'fatih/vim-go'
 """""""""""""vim scripts"""""""""""""""""
 Plugin 'lucius'
 colo lucius
@@ -187,8 +195,8 @@ LuciusDark
 
 Plugin 'a.vim'
 " a.vim {{{
-let g:alternateExtensions_h = "c,cpp,cc"
-let g:alternateExtensions_H = "C,CPP,CC"
+let g:alternateExtensions_h = "cpp,c,cc"
+let g:alternateExtensions_H = "CPP,C,CC"
 let g:alternateExtensions_cpp = "h,hpp"
 let g:alternateExtensions_CPP = "H,HPP"
 let g:alternateExtensions_c = "h"
@@ -219,9 +227,9 @@ Plugin 'DoxygenToolkit.vim'
 " Load doxygen syntax file for c/cpp/idl files
 let g:load_doxygen_syntax = 1
 let g:DoxygenToolkit_commentType = "C"
-let g:DoxygenToolkit_dateTag = "@date:   "
+"let g:DoxygenToolkit_dateTag = "@date:   "
 " XXX: Change it. It's just for my environment.
-let g:DoxygenToolkit_authorName = "jameyli <lgy AT live DOT com>"
+let g:DoxygenToolkit_authorName = "xiaoyaozi <xiaoyaozi2016 AT qq DOT com>"
 let g:DoxygenToolkit_versionString = ""
 let g:DoxygenToolkit_versionTag = ""
 let g:DoxygenToolkit_briefTag_pre = "@brief:  "
@@ -261,6 +269,11 @@ nmap <silent> <unique> <Leader>S :call SyntaxAttr()<CR>
 " End of SyntaxAttr }}}
 
 Plugin 'toyamarinyon/vim-swift'
+
+Plugin 'ryanss/vim-hackernews'
+
+ " Bundle 'https://github.com/neilagabriel/vim-geeknote'
+Bundle 'altercation/vim-colors-solarized'
 
 set nocompatible
 filetype plugin indent on     " required
