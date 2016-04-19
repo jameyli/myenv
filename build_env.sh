@@ -20,6 +20,9 @@
 MYENV=${PWD}
 echo ${MYENV}
 
+git submodule init
+git submodule update
+
 rm -f ~/.myenv
 ln -s ${MYENV} ~/.myenv
 
