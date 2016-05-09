@@ -14,6 +14,7 @@ au BufRead,BufNewFile *.go set filetype=go
 """""""""""""git repo"""""""""""""""""
 
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'rdnetto/YCM-Generator'
 " YCM {{{
 nmap <silent> <leader>gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 let g:ycm_global_ycm_extra_conf = '~/.vim/dot_ycm_extra_conf.py'
@@ -187,7 +188,12 @@ Bundle 'tpope/vim-fugitive'
  " Bundle 'dgryski/vim-godef'
  " let g:godef_same_file_in_same_window=1
  " let g:godef_split=0
- " Bundle 'fatih/vim-go'
+Bundle 'fatih/vim-go'
+au FileType go nmap <leader>r <Plug>(go-run)
+au FileType go nmap <leader>b <Plug>(go-build)
+au FileType go nmap <leader>t <Plug>(go-test)
+au FileType go nmap <leader>c <Plug>(go-coverage)
+
 """""""""""""vim scripts"""""""""""""""""
 Plugin 'lucius'
 colo lucius
